@@ -89,7 +89,7 @@ public class HiveSqlLineage implements NodeProcessor {
 			ArrayList topNodes = new ArrayList();
 			topNodes.add(tree);
 			ogw.startWalking(topNodes, null);
-		} catch (ParseException | SemanticException e) {
+		} catch (ParseException | SemanticException ignored) {
 		}
 	}
 
