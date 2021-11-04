@@ -105,12 +105,31 @@ public class HiveSqlLineage implements NodeProcessor {
 		map.put("sqlFile", sqlFile);
 		return map;
 	}
+	/*解析单条sql--参数为单条sql*/
+	public static Map<String, Object> parsesql(String sql) {
+		HiveSqlLineage lep = new HiveSqlLineage();
+		lep.getLineageInfo(sql);
+		Map<String, Object> map = new HashMap<>();
+		map.put("inputs", lep.getInputTableList());
+		map.put("outputs", lep.getOutputTableList());
+		return map;
+	}
 
 	/*解析多条sql语句*/
 	public static ArrayList<HashMap> getTableLineages(List<String> sqls, String task, String sqlFile) {
 		ArrayList<HashMap> lineages = new ArrayList<>();
 		for (String sql : sqls) {
 			HashMap resMap = (HashMap) parsesql(sql, task, sqlFile);
+			lineages.add(resMap);
+		}
+		return lineages;
+	}
+
+	/*解析多条sql语句，参数为sql List*/
+	public static ArrayList<HashMap> getTableLineages(List<String> sqls) {
+		ArrayList<HashMap> lineages = new ArrayList<>();
+		for (String sql : sqls) {
+			HashMap resMap = (HashMap) parsesql(sql);
 			lineages.add(resMap);
 		}
 		return lineages;
