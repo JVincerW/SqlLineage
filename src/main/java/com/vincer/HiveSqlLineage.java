@@ -105,6 +105,7 @@ public class HiveSqlLineage implements NodeProcessor {
 		map.put("sqlFile", sqlFile);
 		return map;
 	}
+
 	/*解析单条sql--参数为单条sql*/
 	public static Map<String, Object> parsesql(String sql) {
 		HiveSqlLineage lep = new HiveSqlLineage();
