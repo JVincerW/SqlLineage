@@ -14,7 +14,7 @@ import java.util.*;
 
 public class HiveSqlLineage implements NodeProcessor {
 
-	// 存放输入表
+	// 输入表
 	TreeSet<String> inputTableList = new TreeSet<String>();
 
 	// 存放目标表
@@ -34,14 +34,9 @@ public class HiveSqlLineage implements NodeProcessor {
 	public TreeSet getWithTableList() {
 		return withTableList;
 	}
-	//进行测试，sql语句是瞎写的，但是语法是对的
-	public static void main(String[] args) throws Exception {
-		String sqlFile="src/main/resources/test.sql";
-		List<String> sqls = LoadSql.loadSql(sqlFile);
-		ArrayList<HashMap> tableLineages = getTableLineages(sqls, "testTask", "testSqlFile");
-		System.out.println(tableLineages);
-	}
-	public Object process(Node nd, Stack stack, NodeProcessorCtx procCtx, Object... nodeOutputs) throws SemanticException {
+
+	/*执行解析，对应值add到list*/
+	public Object process(Node nd, Stack stack, NodeProcessorCtx procCtx, Object... nodeOutputs) {
 		ASTNode pt = (ASTNode) nd;
 		switch (pt.getToken().getType()) {
 			//create语句
@@ -75,6 +70,7 @@ public class HiveSqlLineage implements NodeProcessor {
 		return null;
 	}
 
+	/*执行解析对应语句部分*/
 	public void getLineageInfo(String query) {
 
 		ParseDriver pd = new ParseDriver();
@@ -97,18 +93,26 @@ public class HiveSqlLineage implements NodeProcessor {
 		}
 	}
 
+	/*解析单条sql*/
+	public static Map<String, Object> ParseSql(String sql, String task, String sqlFile) {
 
+		HiveSqlLineage lep = new HiveSqlLineage();
+		lep.getLineageInfo(sql);
+		Map<String, Object> map = new HashMap<>();
+		map.put("inputs", lep.getInputTableList());
+		map.put("outputs", lep.getOutputTableList());
+		map.put("task", task);
+		map.put("sqlFile", sqlFile);
+		return map;
+	}
+
+	/*解析多条sql语句*/
 	public static ArrayList<HashMap> getTableLineages(List<String> sqls, String task, String sqlFile) {
 		ArrayList<HashMap> lineages = new ArrayList<>();
 		for (String sql : sqls) {
 			HiveSqlLineage lep = new HiveSqlLineage();
-			lep.getLineageInfo(sql);
-			Map<String, Object> map = new HashMap<>();
-			map.put("inputs", lep.getInputTableList());
-			map.put("outputs", lep.getOutputTableList());
-			map.put("task", task);
-			map.put("sqlFile", sqlFile);
-			lineages.add((HashMap) map);
+			HashMap resMap = (HashMap) ParseSql(sql, task, sqlFile);
+			lineages.add(resMap);
 		}
 		return lineages;
 	}
