@@ -94,7 +94,7 @@ public class HiveSqlLineage implements NodeProcessor {
 	}
 
 	/*解析单条sql*/
-	public static Map<String, Object> ParseSql(String sql, String task, String sqlFile) {
+	public static Map<String, Object> parsesql(String sql, String task, String sqlFile) {
 
 		HiveSqlLineage lep = new HiveSqlLineage();
 		lep.getLineageInfo(sql);
@@ -110,7 +110,7 @@ public class HiveSqlLineage implements NodeProcessor {
 	public static ArrayList<HashMap> getTableLineages(List<String> sqls, String task, String sqlFile) {
 		ArrayList<HashMap> lineages = new ArrayList<>();
 		for (String sql : sqls) {
-			HashMap resMap = (HashMap) ParseSql(sql, task, sqlFile);
+			HashMap resMap = (HashMap) parsesql(sql, task, sqlFile);
 			lineages.add(resMap);
 		}
 		return lineages;
