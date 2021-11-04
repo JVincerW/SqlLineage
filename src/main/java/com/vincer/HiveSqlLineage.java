@@ -110,7 +110,6 @@ public class HiveSqlLineage implements NodeProcessor {
 	public static ArrayList<HashMap> getTableLineages(List<String> sqls, String task, String sqlFile) {
 		ArrayList<HashMap> lineages = new ArrayList<>();
 		for (String sql : sqls) {
-			HiveSqlLineage lep = new HiveSqlLineage();
 			HashMap resMap = (HashMap) ParseSql(sql, task, sqlFile);
 			lineages.add(resMap);
 		}
