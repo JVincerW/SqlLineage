@@ -1,11 +1,10 @@
 package com.vincer;
 
-import org.apache.calcite.sql.parser.SqlParser;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import static com.vincer.HiveSqlLineage.getTableLineages;
+
+import static com.vincer.HiveSqlLineage.*;
 
 /**
  * @ClassPath com.vincer.LineageApp
@@ -21,5 +20,14 @@ public class LineageApp {
 		List<String> sqls = LoadSql.loadSqls(sqlFile);
 		ArrayList<HashMap> tableLineages = getTableLineages(sqls, taskName, sqlFile);
 		System.out.println(tableLineages);
+
+
+		String sql="Select Sno\n" +
+				"from sc\n" +
+				"Where sc.Grade<60\n" +
+				"Group by Sno\n" +
+				"Having count(Cno)>=2";
+		System.out.println(rTrim(sql));
+
 	}
 }

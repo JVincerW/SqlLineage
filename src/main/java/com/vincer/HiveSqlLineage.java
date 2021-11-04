@@ -70,6 +70,14 @@ public class HiveSqlLineage implements NodeProcessor {
 		return null;
 	}
 
+	/*去除后缀分号*/
+	public static String rTrim(String sql) {
+		if (sql.trim().endsWith(";")) {
+			sql = sql.substring(0, sql.length() - 1);
+		}
+		return sql;
+	}
+
 	/*执行解析对应语句部分*/
 	public void getLineageInfo(String query) {
 
@@ -94,9 +102,10 @@ public class HiveSqlLineage implements NodeProcessor {
 	}
 
 	/*解析单条sql*/
-	public static Map<String, Object> parsesql(String sql, String task, String sqlFile) {
+	public static Map<String, Object> parseSql(String sql, String task, String sqlFile) {
 
 		HiveSqlLineage lep = new HiveSqlLineage();
+		sql=rTrim(sql);
 		lep.getLineageInfo(sql);
 		Map<String, Object> map = new HashMap<>();
 		map.put("inputs", lep.getInputTableList());
@@ -107,8 +116,9 @@ public class HiveSqlLineage implements NodeProcessor {
 	}
 
 	/*解析单条sql--参数为单条sql*/
-	public static Map<String, Object> parsesql(String sql) {
+	public static Map<String, Object> parseSql(String sql) {
 		HiveSqlLineage lep = new HiveSqlLineage();
+		sql=rTrim(sql);
 		lep.getLineageInfo(sql);
 		Map<String, Object> map = new HashMap<>();
 		map.put("inputs", lep.getInputTableList());
@@ -120,7 +130,7 @@ public class HiveSqlLineage implements NodeProcessor {
 	public static ArrayList<HashMap> getTableLineages(List<String> sqls, String task, String sqlFile) {
 		ArrayList<HashMap> lineages = new ArrayList<>();
 		for (String sql : sqls) {
-			HashMap resMap = (HashMap) parsesql(sql, task, sqlFile);
+			HashMap resMap = (HashMap) parseSql(sql, task, sqlFile);
 			lineages.add(resMap);
 		}
 		return lineages;
@@ -130,7 +140,7 @@ public class HiveSqlLineage implements NodeProcessor {
 	public static ArrayList<HashMap> getTableLineages(List<String> sqls) {
 		ArrayList<HashMap> lineages = new ArrayList<>();
 		for (String sql : sqls) {
-			HashMap resMap = (HashMap) parsesql(sql);
+			HashMap resMap = (HashMap) parseSql(sql);
 			lineages.add(resMap);
 		}
 		return lineages;

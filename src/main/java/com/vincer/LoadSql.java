@@ -13,7 +13,7 @@ import java.util.List;
  **/
 public class LoadSql {
 	/*加载sql文件中的sqls*/
-	static List<String> loadSqls(String sqlFile) {
+	public static List<String> loadSqls(String sqlFile) {
 		//存储单个文件中的sql语句列表
 		List<String> sqlList = new ArrayList<String>();
 		try {
