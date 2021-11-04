@@ -20,7 +20,7 @@ public class LoadSql {
 			InputStream sqlFileIn = new FileInputStream(sqlFile);
 			StringBuilder sqlSb = new StringBuilder();
 			byte[] buff = new byte[1024];
-			int byteRead = 0;
+			int byteRead;
 			while ((byteRead = sqlFileIn.read(buff)) != -1) {
 				String addStr = new String(buff, 0, byteRead);
 				if (!addStr.trim().isEmpty()) {

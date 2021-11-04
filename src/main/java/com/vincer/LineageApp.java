@@ -15,7 +15,7 @@ import static com.vincer.HiveSqlLineage.getTableLineages;
  **/
 public class LineageApp {
 	//进行测试
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		String sqlFile="src/main/resources/test.sql";
 		String taskName="testTask";
 		List<String> sqls = LoadSql.loadSqls(sqlFile);
