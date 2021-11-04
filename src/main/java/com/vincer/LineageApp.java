@@ -15,8 +15,9 @@ public class LineageApp {
 	//进行测试，sql语句是瞎写的，但是语法是对的
 	public static void main(String[] args) throws Exception {
 		String sqlFile="src/main/resources/test.sql";
+		String taskName="testTask";
 		List<String> sqls = LoadSql.loadSqls(sqlFile);
-		ArrayList<HashMap> tableLineages = getTableLineages(sqls, "testTask", "testSqlFile");
+		ArrayList<HashMap> tableLineages = getTableLineages(sqls, "testTask", sqlFile);
 		System.out.println(tableLineages);
 	}
 }
