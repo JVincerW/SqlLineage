@@ -12,12 +12,12 @@ import static com.vincer.HiveSqlLineage.getTableLineages;
  * @Created by Vincer
  **/
 public class LineageApp {
-	//进行测试，sql语句是瞎写的，但是语法是对的
+	//进行测试
 	public static void main(String[] args) throws Exception {
 		String sqlFile="src/main/resources/test.sql";
 		String taskName="testTask";
 		List<String> sqls = LoadSql.loadSqls(sqlFile);
-		ArrayList<HashMap> tableLineages = getTableLineages(sqls, "testTask", sqlFile);
+		ArrayList<HashMap> tableLineages = getTableLineages(sqls, taskName, sqlFile);
 		System.out.println(tableLineages);
 	}
 }
