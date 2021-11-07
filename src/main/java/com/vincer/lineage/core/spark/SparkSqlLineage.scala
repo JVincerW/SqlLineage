@@ -139,13 +139,13 @@ class SparkSqlLineage {
 				parsePlan(project.child, inputs, outputs)
 			case plan: SubqueryAlias =>
 				val project: SubqueryAlias = plan
-				val childinputs = new JSet[String]()
-				val childoutputs = new JSet[String]()
-				parsePlan(project.child, childinputs, childoutputs)
-				if (childinputs.size() > 1) {
-					childinputs.forEach(table => inputs.add(table))
-				} else if (childinputs.size() == 1) {
-					val ctb: String = childinputs.iterator().next()
+				val childins = new JSet[String]()
+				val childouts = new JSet[String]()
+				parsePlan(project.child, childins, childouts)
+				if (childins.size() > 1) {
+					childins.forEach(table => inputs.add(table))
+				} else if (childins.size() == 1) {
+					val ctb: String = childins.iterator().next()
 					inputs.add(ctb)
 				}
 			case plan: CreateTable =>
@@ -167,9 +167,8 @@ class SparkSqlLineage {
 					parsePlan(cte._2, inputs, outputs)
 				})
 				parsePlan(project.child, inputs, outputs)
-			case plan => {
+			case plan =>
 				throw new RuntimeException("plan:\n" + plan.getClass.getName + "\n" + plan)
-			}
 		}
 	}
 }
