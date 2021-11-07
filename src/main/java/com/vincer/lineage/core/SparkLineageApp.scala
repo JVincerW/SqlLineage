@@ -1,6 +1,7 @@
 package com.vincer.lineage.core
 
 import com.vincer.lineage.core.spark.SparkSqlLineage
+import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.catalyst.plans.logical.LogicalPlan
 import org.apache.spark.sql.execution.SparkSqlParser
 
@@ -19,8 +20,8 @@ object SparkLineageApp {
 		println(p.recursionParsePlan(logicalPlan))
 	}
 
-	def getSql() = {
-		"""
+	def getSql: String = {
+	 """
 			|insert overwrite table app_bi.edu_income_tableau_report_month partition (by_month)
 			|SELECT
 			|    substring(date_sub(CURRENT_DATE, 1),1,7) as month,

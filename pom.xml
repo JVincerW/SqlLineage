@@ -12,8 +12,14 @@
 		<spark.version>3.1.2</spark.version>
 		<scala.version>2.12.15</scala.version>
 		<scala.binary.version>2.12</scala.binary.version>
+		<flink.version>1.13.3</flink.version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>org.apache.calcite</groupId>
+			<artifactId>calcite-testkit</artifactId>
+			<version>1.28.0</version>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.hive</groupId>
 			<artifactId>hive-exec</artifactId>
