@@ -1,4 +1,4 @@
-package com.vincer;
+package com.vincer.lineage.core.common;
 
 import java.io.FileInputStream;
 import java.io.InputStream;

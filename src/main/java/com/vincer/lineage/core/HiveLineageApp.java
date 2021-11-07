@@ -1,10 +1,12 @@
-package com.vincer;
+package com.vincer.lineage.core;
+
+import com.vincer.lineage.core.common.LoadSql;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.vincer.HiveSqlLineage.*;
+import static com.vincer.lineage.core.hive.HiveSqlLineage.*;
 
 /**
  * @ClassPath com.vincer.LineageApp
@@ -12,7 +14,7 @@ import static com.vincer.HiveSqlLineage.*;
  * @Date 2021/11/4 9:55
  * @Created by Vincer
  **/
-public class LineageApp {
+public class HiveLineageApp {
 	//进行测试
 	public static void main(String[] args) {
 		String sqlFile="src/main/resources/test.sql";
@@ -20,14 +22,5 @@ public class LineageApp {
 		List<String> sqls = LoadSql.loadSqls(sqlFile);
 		ArrayList<HashMap> tableLineages = getTableLineages(sqls, taskName, sqlFile);
 		System.out.println(tableLineages);
-
-
-		String sql="Select Sno\n" +
-				"from sc\n" +
-				"Where sc.Grade<60\n" +
-				"Group by Sno\n" +
-				"Having count(Cno)>=2";
-		System.out.println(rTrim(sql));
-
 	}
 }

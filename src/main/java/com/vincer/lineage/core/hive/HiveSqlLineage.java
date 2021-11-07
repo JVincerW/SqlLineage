@@ -1,4 +1,4 @@
-package com.vincer;
+package com.vincer.lineage.core.hive;
 
 import org.apache.hadoop.hive.ql.lib.*;
 import org.apache.hadoop.hive.ql.parse.*;
