@@ -142,9 +142,7 @@ class SparkSqlLineage {
 				val childins = new JSet[String]()
 				val childouts = new JSet[String]()
 				parsePlan(project.child, childins, childouts)
-				if (childins.size() > 1) {
-					childins.forEach(table => inputs.add(table))
-				} else if (childins.size() == 1) {
+				if (childins.size() > 1) childins.forEach(table => inputs.add(table)) else if (childins.size() == 1) {
 					val ctb: String = childins.iterator().next()
 					inputs.add(ctb)
 				}
